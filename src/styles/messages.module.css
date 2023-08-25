@@ -1,0 +1,20 @@
+.wrapper {
+    width: 850px;
+    height: 70px;
+    border: 1px solid red;
+    border-radius: 10px;
+    margin-left: 5px;
+    /* margin-top: 10px; */
+}
+
+.user {
+    font-size: 20px;
+}
+
+.message {
+    font-size: 18px;
+}
+
+.date {
+    font-size: 15px;
+}

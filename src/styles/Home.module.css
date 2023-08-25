@@ -1,0 +1,24 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.center {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 209px;
+}
+
+.header {
+    font-weight: 700;
+    font-size: 300px;
+    line-height: 396px;
+}
+
