@@ -11,11 +11,7 @@ import {
     TIMEOUT,
 } from '@/utils/const';
 import { getCookie } from '@/utils/getCookie';
-import {
-    Login,
-    Send,
-    Settings
-} from '@mui/icons-material';
+import { Login, Send, Settings } from '@mui/icons-material';
 import {
     Box,
     Button,
@@ -85,11 +81,6 @@ function Chat() {
         }
     }, [token]);
 
-    function sendMessage(text: string | number) {
-        socket.send(JSON.stringify({ text }));
-        setTextMessage(EMPTY_STRING);
-    }
-
     useEffect(() => {
         try {
             socket.onopen = () => {
@@ -107,6 +98,11 @@ function Chat() {
             console.error(error);
         }
     }, [socket, connect]);
+
+    function sendMessage(text: string | number) {
+        socket.send(JSON.stringify({ text }));
+        setTextMessage(EMPTY_STRING);
+    }
 
     return (
         <Box
