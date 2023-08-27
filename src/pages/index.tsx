@@ -97,6 +97,9 @@ export default function Home() {
                         fullWidth
                         focused
                         onChange={(event) => setMail(event.target.value)}
+                        inputProps={{
+                            autoComplete: 'off',
+                        }}
                     />
                     <Button
                         variant="contained"

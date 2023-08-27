@@ -14,10 +14,11 @@ interface ItemMeProps {
 function ItemMessage({ user, text, email, date }: ItemMeProps) {
     const userData = getCookie(COOKIES_KEY.USER_DATA);
     const messageTime = convertDate(date);
+    const companionMes = email !== userData.email;
 
     return (
         <Box sx={itemMesBlock}>
-            {email !== userData.email && (
+            {companionMes && (
                 <Typography
                     fontSize={'15px'}
                     sx={{

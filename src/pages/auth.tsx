@@ -105,6 +105,9 @@ function Auth() {
                         }}
                         focused
                         fullWidth
+                        inputProps={{
+                            autoComplete: 'off',
+                        }}
                     />
                     <Button
                         variant="contained"
