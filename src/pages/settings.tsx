@@ -7,7 +7,7 @@ import {
     PAGES_HREF,
     REQUEST,
     THEME_KEY,
-    UI_ERROR
+    UI_ERROR,
 } from '@/utils/const';
 import { getCookie } from '@/utils/getCookie';
 import { Close, ExpandMore } from '@mui/icons-material';
@@ -47,7 +47,7 @@ function Settings() {
         checkUser();
         setImageTheme(localStorage.getItem(THEME_KEY));
         dataUser && setName(dataUser.name);
-    }, [dataUser, router, token]);
+    }, []);
 
     function addTheme(image: File | undefined) {
         try {
@@ -120,7 +120,7 @@ function Settings() {
                     <Accordion sx={{ bgcolor: '#242424' }}>
                         <AccordionSummary expandIcon={<ExpandMore />}>
                             <Typography color={'#5e55d6'}>
-                            Add wallpaper to chat
+                                Add wallpaper to chat
                             </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -172,7 +172,7 @@ function Settings() {
                                     sx={{ mt: '20px' }}
                                     type="submit"
                                 >
-                                   Change name
+                                    Change name
                                 </Button>
                             </form>
                             <Stack sx={{ width: '100%', mt: '10px' }}>
@@ -182,7 +182,8 @@ function Settings() {
                                     </Alert>
                                 ) : reqStatus.success ? (
                                     <Alert severity="success">
-                                        The name was successfully changed to: {name}
+                                        The name was successfully changed to:{' '}
+                                        {name}
                                     </Alert>
                                 ) : null}
                             </Stack>

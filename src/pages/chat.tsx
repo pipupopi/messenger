@@ -1,4 +1,3 @@
-import MessageList from '@/Components/messages/list-message';
 import { checkUserReq, requestData } from '@/request';
 import { container, formBlock } from '@/styles';
 import {
@@ -23,6 +22,8 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
+import MessageList from '@/Components/messages/list-message';
+import { nanoid } from '@reduxjs/toolkit';
 
 export interface MESSAGES {
     createdAt: string;
@@ -71,7 +72,7 @@ function Chat() {
                         token
                     );
                     const result = await response.json();
-                    setMessages(result.messages);
+                    setMessages(result.messages.reverse());
                 };
                 getMessages();
             }
@@ -99,7 +100,7 @@ function Chat() {
         }
     }, [socket, connect]);
 
-    function sendMessage(text: string | number) {
+    function sendMessage(text: any) {
         socket.send(JSON.stringify({ text }));
         setTextMessage(EMPTY_STRING);
     }

@@ -1,72 +1,37 @@
 import { MESSAGES } from '@/pages/chat';
 import { listMesBlock, messageBlock } from '@/styles';
-import {
-    COOKIES_KEY,
-    PAGES_HREF,
-    SCROLL_THRESHOLD,
-    SLICE_VALUES,
-} from '@/utils/const';
+import { COOKIES_KEY } from '@/utils/const';
 import { getCookie } from '@/utils/getCookie';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Box, Button } from '@mui/material';
-import { useRouter } from 'next/router';
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import ItemMessage from './item-message';
 
-interface MessageList {
-    data: {
-        createdAt: string;
-        text: string;
-        updateAt: string;
-        user: {
-            email: string;
-            name: string;
-        };
-        ___v: number;
-        _id: string;
-    }[];
+interface MESSAGE_LIST {
+    data: MESSAGES[];
 }
 
-const MessageList = memo(function MessageList({ data }: MessageList) {
-    const router = useRouter();
+const MessageList = memo(function MessageList({ data }: MESSAGE_LIST) {
     const userData = getCookie(COOKIES_KEY.USER_DATA);
     const chatRef = useRef<HTMLDivElement>(null);
     const currentChatRef = chatRef.current;
     const [scrollTop, setScrollTop] = useState(currentChatRef?.scrollHeight);
-    const [messages, setMessages] = useState<MESSAGES[]>([]);
     const [showArrow, setShowArrow] = useState(false);
 
-    useEffect(() => {
-        userData ? null : router.push(PAGES_HREF.AUTH);
-    }, [userData, router]);
-
-    const smoothScrollTo = useCallback(() => {
+    function smoothScrollTo() {
         if (currentChatRef) {
             currentChatRef.scrollTop = currentChatRef.scrollHeight;
         }
-    }, [currentChatRef]);
+    }
 
     useEffect(() => {
-        setMessages(
-            [...data].slice(SLICE_VALUES.INITIAL, SLICE_VALUES.INCREMENT)
-        );
         smoothScrollTo();
-    }, [data, smoothScrollTo]);
+    }, [data]);
 
-    const sliceMessages = useCallback(() => {
-        if (currentChatRef) {
-            if (currentChatRef.scrollTop <= SCROLL_THRESHOLD) {
-                const newSliceValue = messages.length + SLICE_VALUES.INCREMENT;
-                setMessages((prevMessages) =>
-                    [...data].slice(SLICE_VALUES.INITIAL, newSliceValue)
-                );
-            }
-        }
-    }, [currentChatRef, data, messages.length]);
+    console.log(data);
 
     useEffect(() => {
         currentChatRef?.addEventListener('scroll', () => {
-            sliceMessages();
             setScrollTop(
                 currentChatRef.scrollHeight - currentChatRef.clientHeight
             );
@@ -74,15 +39,12 @@ const MessageList = memo(function MessageList({ data }: MessageList) {
                 ? setShowArrow(false)
                 : setShowArrow(true);
         });
-        return () => {
-            currentChatRef?.removeEventListener('scroll', sliceMessages);
-        };
-    }, [sliceMessages, scrollTop, currentChatRef]);
+    }, [scrollTop, currentChatRef]);
 
     return (
         <>
             <Box ref={chatRef} sx={messageBlock}>
-                {[...messages].reverse().map((item) => (
+                {data.map((item) => (
                     <Box
                         sx={{
                             justifyContent: `${
