@@ -7,7 +7,8 @@ import {
     PAGES_HREF,
     REQUEST,
     THEME_KEY,
-    UI_ERROR,
+    UI_ERROR_MESSAGE,
+    UI_SUCCESS_MESSAGE,
 } from '@/utils/const';
 import { getCookie } from '@/utils/getCookie';
 import { Close, ExpandMore } from '@mui/icons-material';
@@ -23,6 +24,7 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
+import { log } from 'console';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -31,8 +33,8 @@ import { useEffect, useState } from 'react';
 function Settings() {
     const router = useRouter();
     const token = getCookie(COOKIES_KEY.TOKEN);
-    const dataUser = getCookie(COOKIES_KEY.USER_DATA);
-    const [name, setName] = useState(EMPTY_STRING);
+    const userData = getCookie(COOKIES_KEY.USER_DATA);
+    const [userName, setUserName] = useState(EMPTY_STRING);
     const [imageTheme, setImageTheme] = useState<string | null>();
     const [reqStatus, setReqStatus] = useState({
         success: false,
@@ -46,7 +48,7 @@ function Settings() {
         };
         checkUser();
         setImageTheme(localStorage.getItem(THEME_KEY));
-        dataUser && setName(dataUser.name);
+        userData && setUserName(getCookie(COOKIES_KEY.USER_NAME));
     }, []);
 
     function addTheme(image: File | undefined) {
@@ -67,7 +69,7 @@ function Settings() {
             : setReqStatus({
                   success: false,
                   error: true,
-                  errorText: UI_ERROR.NAME,
+                  errorText: UI_ERROR_MESSAGE.NAME,
               });
     }
 
@@ -81,14 +83,17 @@ function Settings() {
             setReqStatus({
                 success: response.ok,
                 error: !response.ok,
-                errorText: UI_ERROR.DEFAULT,
+                errorText: UI_ERROR_MESSAGE.DEFAULT,
             });
             const result = await response.json();
             Cookies.set(COOKIES_KEY.USER_NAME, JSON.stringify(result.name));
+            setUserName(result.name);
         } catch (error) {
             console.error(error);
         }
     }
+
+    console.log(userName);
 
     return (
         <Box
@@ -147,12 +152,12 @@ function Settings() {
                             <form
                                 onSubmit={(event) => {
                                     event.preventDefault();
-                                    setValidateName(name);
+                                    setValidateName(userName);
                                 }}
                             >
                                 <TextField
                                     onChange={(event) =>
-                                        setName(event.target.value)
+                                        setUserName(event.target.value)
                                     }
                                     size="small"
                                     label={'Enter a new name'}
@@ -164,7 +169,7 @@ function Settings() {
                                     }}
                                     fullWidth
                                     focused
-                                    value={name}
+                                    value={userName}
                                 />
                                 <Button
                                     variant="contained"
@@ -182,8 +187,7 @@ function Settings() {
                                     </Alert>
                                 ) : reqStatus.success ? (
                                     <Alert severity="success">
-                                        The name was successfully changed to:{' '}
-                                        {name}
+                                        {UI_SUCCESS_MESSAGE.NEW_NAME} {userName}
                                     </Alert>
                                 ) : null}
                             </Stack>

@@ -7,7 +7,8 @@ import {
     REGEX,
     REQUEST,
     THEME_KEY,
-    UI_ERROR,
+    UI_ERROR_MESSAGE,
+    UI_SUCCESS_MESSAGE,
 } from '@/utils/const';
 import { getCookie } from '@/utils/getCookie';
 import SendIcon from '@mui/icons-material/Send';
@@ -48,7 +49,7 @@ export default function Home() {
             setReqStatus({
                 success: response.ok,
                 error: !response.ok,
-                textError: UI_ERROR.DEFAULT,
+                textError: UI_ERROR_MESSAGE.DEFAULT,
             });
         } catch (error) {
             console.error(error);
@@ -61,7 +62,7 @@ export default function Home() {
             : setReqStatus({
                   success: false,
                   error: true,
-                  textError: UI_ERROR.MAIL,
+                  textError: UI_ERROR_MESSAGE.MAIL,
               });
     }
 
@@ -124,7 +125,9 @@ export default function Home() {
                     {reqStatus.error ? (
                         <Alert severity="error">{reqStatus.textError}</Alert>
                     ) : reqStatus.success ? (
-                        <Alert severity="success">The code in the mail!</Alert>
+                        <Alert severity="success">
+                            {UI_SUCCESS_MESSAGE.TOKEN}
+                        </Alert>
                     ) : null}
                 </Stack>
             </Box>

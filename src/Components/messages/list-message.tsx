@@ -28,8 +28,6 @@ const MessageList = memo(function MessageList({ data }: MESSAGE_LIST) {
         smoothScrollTo();
     }, [data]);
 
-    console.log(data);
-
     useEffect(() => {
         currentChatRef?.addEventListener('scroll', () => {
             setScrollTop(

@@ -8,7 +8,7 @@ import {
     REQUEST,
     THEME_KEY,
     TIMEOUT,
-    UI_ERROR,
+    UI_ERROR_MESSAGE,
 } from '@/utils/const';
 import { setCookie } from '@/utils/getCookie';
 import LoginIcon from '@mui/icons-material/Login';
@@ -49,7 +49,7 @@ function Auth() {
                 );
                 result.ok
                     ? enterChat(await result.json())
-                    : showError(UI_ERROR.TOKEN);
+                    : showError(UI_ERROR_MESSAGE.TOKEN);
             }
         } catch (error) {
             throw error;
@@ -71,7 +71,7 @@ function Auth() {
     }
 
     function hasCyrillicSymbols(text: string) {
-        REGEX.CYRILLIC.test(text) ? auth() : showError(UI_ERROR.CYRILLIC);
+        REGEX.CYRILLIC.test(text) ? auth() : showError(UI_ERROR_MESSAGE.CYRILLIC);
     }
 
     return (

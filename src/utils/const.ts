@@ -46,12 +46,17 @@ export const ERROR_MESSAGE = {
     STRINGIFY: 'Error while parsing JSON.stringify',
 };
 
-export const UI_ERROR = {
+export const UI_ERROR_MESSAGE = {
     DEFAULT: 'An error occurred...',
     CYRILLIC: 'The token cannot contain Russian characters',
     TOKEN: 'Invalid token has been entered',
     MAIL: 'Invalid mail has been introduced',
     NAME: 'The name must be longer than 3 characters',
+};
+
+export const UI_SUCCESS_MESSAGE = {
+    TOKEN: 'The token in the mail!',
+    NEW_NAME: 'Your name was successfully changed to',
 };
 
 export const EMPTY_STRING = '';
@@ -62,4 +67,5 @@ export const SLICE_VALUES = {
     INCREMENT: 20,
 };
 export const SCROLL_THRESHOLD = 20;
-export const MAX_NAME_LENGTH = 2
+export const MAX_NAME_LENGTH = 2;
+export const FORMAT_DATE_PARAMETRES = 'H:mm d/MM';
